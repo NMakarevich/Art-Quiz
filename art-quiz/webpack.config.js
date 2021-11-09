@@ -34,7 +34,7 @@ module.exports = ({ development }) => ({
         test: /\.(?:gif|png|jpg|jpeg)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/img/[name].[contenthash][ext]'
+          filename: 'assets/img/[name][ext]'
         }
       },
       {
@@ -80,11 +80,6 @@ module.exports = ({ development }) => ({
         {
           from: './src/assets/svg',
           to: './assets/svg',
-          noErrorOnMissing: true,
-        },
-        {
-          from: './src/assets/playlist',
-          to: './assets/playlist',
           noErrorOnMissing: true,
         },
         {
