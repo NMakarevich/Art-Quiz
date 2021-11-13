@@ -1,0 +1,111 @@
+@keyframes showStart {
+  from {
+    transform: translateX(-100%)
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hideStart {
+  from {
+    transform: translateX(0)
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+  background-image: url('../assets/img/bgStart.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px;
+  animation-name: showStart;
+  animation-duration: .7s;
+  animation-fill-mode: forwards;
+
+  &.hide {
+    animation-name: hideStart;
+    animation-duration: .7s;
+    animation-fill-mode: forwards;
+  }
+
+  .header-start {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+
+    .button-settings {
+      width: 32px;
+      height: 32px;
+      background-image: url('../assets/svg/settings.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+
+  .main-start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 40px;
+    gap: 15px;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 166px;
+      height: 62px;
+      background-image: url('../assets/svg/logo.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .button {
+      width: 268px;
+      height: 56px;
+      border: 1px solid white;
+      border-radius: 28px;
+      font-size: 24px;
+      line-height: 28px;
+    }
+  }
+
+  .footer-start {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+
+    a {
+      &.school-logo {
+        display: block;
+        width: 61px;
+        height: 23px;
+        background-image: url('../assets/svg/rs_school_logo.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      color: white;
+      text-decoration: none;
+      opacity: .8;
+      transition: opacity .3s;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

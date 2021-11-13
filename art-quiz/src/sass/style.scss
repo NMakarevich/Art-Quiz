@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+@import 'startScreen';
+@import 'settingsScreen';
+
+html {
+  display: flex;
+  min-height: 100vh;
+  background-color: black;
+}
+
+body {
+  display: flex;
+  min-width: 360px;
+  width: 100%;
+}
+
+.container {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  opacity: .8;
+  transition: opacity .3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
