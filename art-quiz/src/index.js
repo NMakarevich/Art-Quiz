@@ -4,7 +4,7 @@ import './sass/style.scss'
 
 const container = document.querySelector('.container');
 
-let startScreen = new StartScreen();
+const startScreen = new StartScreen();
 container.append(startScreen.elem);
 
 document.addEventListener('open-settings', () => {
@@ -13,8 +13,12 @@ document.addEventListener('open-settings', () => {
   startScreen.destroy();
   startScreen.elem.addEventListener('animationend', () => container.append(settingsScreen.elem))
   document.addEventListener('close-settings', () => {
-    startScreen = new StartScreen();
+    startScreen.render();
     settingsScreen.destroy();
     settingsScreen.elem.addEventListener('animationend', () => container.append(startScreen.elem))
   })
+})
+
+startScreen.elem.addEventListener('select-quiz', (event) => {
+  console.log(event.detail)
 })

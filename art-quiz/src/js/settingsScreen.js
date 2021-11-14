@@ -3,11 +3,15 @@ import createElement from "./createElement";
 export default class SettingsScreen {
   constructor() {
     this._container = null;
+    this.settings = null;
   }
 
   render() {
     this._container = createElement('settings-screen', this.settingsScreenTemplate())
     this.eventListeners();
+    this.getSettings();
+    this.setSettings();
+    this.updateVolume();
   }
 
   get elem() {
@@ -22,30 +26,120 @@ export default class SettingsScreen {
     return this._container.querySelector('.time-control');
   }
 
+  get volumeButton() {
+    return this._container.querySelector('.volume-button')
+  }
+
+  get volumeBar() {
+    return this._container.querySelector('#volume')
+  }
+
+  get timeToggle() {
+    return this._container.querySelector('#time-game')
+  }
+
+  get timePerAnswer() {
+    return this._container.querySelector('#time-answer')
+  }
+
+  get settingsButtons() {
+    return this._container.querySelector('.settings-buttons')
+  }
+
+  getSettings = () => {
+    this.settings = JSON.parse(localStorage.getItem('artQuizSettings')) || this.settingsDefault();
+    return this.settings;
+  }
+
+  setSettings = () => {
+    this.volumeBar.value = this.settings['volume'];
+    this.timeToggle.checked = this.settings['time'];
+    this.timePerAnswer.value = this.settings['timePerAnswer'];
+  }
+
+  saveSettings = () => {
+    this.settings['volume'] = this.volumeBar.value;
+    this.settings['time'] = this.timeToggle.checked;
+    this.settings['timePerAnswer'] = this.timePerAnswer.value;
+    localStorage.setItem('artQuizSettings', JSON.stringify(this.settings))
+  }
+
+  settingsDefault = () => {
+    this.settings = {
+      "volume": 0.5,
+      "time": false,
+      "timePerAnswer": 20
+    }
+    localStorage.setItem('artQuizSettings', JSON.stringify(this.settings));
+    this.setSettings();
+    return this.settings;
+  }
+
   destroy() {
     this.elem.classList.add('hide');
     this.elem.addEventListener('animationend', () => this.elem.remove())
   }
 
-  eventListeners() {
-    this.backButton.addEventListener('click', () => {
-      const event = new CustomEvent('close-settings', {
-        bubbles: true
-      });
-      this.elem.dispatchEvent(event)
-    })
-    this.timeControl.addEventListener('click', (event) => {
-      const target = event.target;
-      const input = this.timeControl.querySelector('input')
-      if (target.tagName !== 'BUTTON') return;
+  updateVolume = () => {
+    this.volumeBar.style.background = `linear-gradient(to right, #FFBCA2 0%, #FFBCA2 ${this.volumeBar.value * 100}%, #A4A4A4 ${this.volumeBar.value * 100}%, #A4A4A4 100%)`
+    if (this.volumeBar.value == 0) {
+      this.volumeButton.classList.remove('active');
+    }
+    else {
+      this.volumeButton.classList.add('active');
+    }
+  }
 
-      if (target.classList.contains('button-minus')) {
-        input.stepDown()
-      }
-      else {
-        input.stepUp()
-      }
-    })
+  volumeControl = () => {
+    this.volumeButton.classList.toggle('active');
+    if (this.volumeButton.classList.contains('active')) {
+      this.volumeBar.value = this.volumeValue;
+      this.updateVolume();
+    }
+    else {
+      this.volumeValue = this.volumeBar.value;
+      this.volumeBar.value = 0;
+      this.updateVolume();
+    }
+  }
+
+  closeSettings = () => {
+    const event = new CustomEvent('close-settings', {
+      bubbles: true
+    });
+    this.elem.dispatchEvent(event)
+  }
+
+  changeTime = (event) => {
+    const target = event.target;
+    const input = this.timeControl.querySelector('input')
+    if (target.tagName !== 'BUTTON') return;
+
+    if (target.classList.contains('button-minus')) {
+      input.stepDown()
+    }
+    else {
+      input.stepUp()
+    }
+  }
+
+  applySettings = (event) => {
+    const target = event.target;
+    if (target.tagName !== 'BUTTON') return;
+    
+    if (target.classList.contains('button-default')) this.settingsDefault();
+    else this.saveSettings();
+  }
+
+  eventListeners() {
+    this.backButton.addEventListener('click', this.closeSettings)
+    this.timeControl.addEventListener('click', this.changeTime)
+
+    this.volumeButton.addEventListener('click', this.volumeControl);
+    this.volumeBar.addEventListener('input', this.updateVolume);
+
+
+    this.settingsButtons.addEventListener('click', this.applySettings)
   }
 
   settingsScreenTemplate() {
@@ -58,7 +152,7 @@ export default class SettingsScreen {
     <div class="setting-item volume">
       <h2>Volume</h2>
       <div class="volume-control">
-        <button type="button" class="button volume-button"></button>
+        <button type="button" class="button volume-button active"></button>
         <input type="range" min="0" max="1" value="0.5" step="0.01" name="volume" id="volume">
       </div>
     </div>
@@ -74,7 +168,7 @@ export default class SettingsScreen {
         <button type="button" class="button button-plus">+</button>
       </div>
     </div>
-    <div class="setting-item setting-buttons">
+    <div class="setting-item settings-buttons">
       <button type="button" class="button button-default">Default</button>
       <button type="button" class="button button-save">Save</button>
     </div>

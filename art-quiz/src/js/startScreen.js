@@ -15,6 +15,10 @@ export default class StartScreen {
     return this._container.querySelector('.button-settings')
   }
 
+  get quizButtons() {
+    return this._container.querySelector('.select-quiz');
+  }
+
   render() {
     this._container = createElement('start-screen', this.startScreenTemplate())
     this.eventListeners();
@@ -25,13 +29,29 @@ export default class StartScreen {
     this.elem.addEventListener('animationend', () => this.elem.remove())
   }
 
-  eventListeners() {
-    this.settingsButton.addEventListener('click', () => {
-      const event = new CustomEvent('open-settings', {
-        bubbles: true
-      });
-      this.elem.dispatchEvent(event)
+  selectQuiz = (event) => {
+    const target = event.target;
+    if (!target.dataset.quiz) return;
+
+    const evt = new CustomEvent('select-quiz', {
+      detail: target.dataset.quiz,
+      bubbles: true
     })
+
+    this.elem.dispatchEvent(evt)
+  }
+
+  openSettings = () => {
+    const event = new CustomEvent('open-settings', {
+      bubbles: true
+    });
+    this.elem.dispatchEvent(event)
+  } 
+
+  eventListeners() {
+    this.settingsButton.addEventListener('click', this.openSettings)
+
+    this.quizButtons.addEventListener('click', this.selectQuiz)
   }
 
   startScreenTemplate() {
@@ -41,8 +61,10 @@ export default class StartScreen {
       </header>
       <main class="main-start">
         <div class="logo"></div>
-        <button type="button" class="button button-quiz" data-quiz="artist">Artist quiz</button>
-        <button type="button" class="button button-quiz" data-quiz="pictures">Pictures quiz</button>
+        <div class="select-quiz">
+          <button type="button" class="button button-quiz" data-quiz="artist">Artist quiz</button>
+          <button type="button" class="button button-quiz" data-quiz="pictures">Pictures quiz</button>
+        </div>
       </main>
       <footer class="footer footer-start">
         <a href="http://rs.school/js" class="school-logo" target="_blank"></a>
