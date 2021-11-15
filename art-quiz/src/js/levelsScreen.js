@@ -37,7 +37,7 @@ export default class Levels {
   }
 
   async getDataList() {
-    const res = await fetch('../json/images.json');
+    const res = await fetch('./json/images.json');
     const data = await res.json();
     const dataLength = Math.floor(data.length / 2);
     this.levelsNumber = Math.floor(dataLength / 10)
@@ -123,7 +123,7 @@ export default class Levels {
         <span class="level-number">Level ${i + 1}</span>
         <span class="level-score">${this.playedLevels[i] == null ? 0 : this.playedLevels[i].filter(item => item).length}/10</span>
       </header>
-      <img class="card-image" src="../assets/img/arts/squared/${i * 10 + startNum}.jpg">
+      <img class="card-image" src="./assets/img/arts/squared/${i * 10 + startNum}.jpg">
     </div>`
     }
     return html;
