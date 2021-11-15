@@ -41,15 +41,6 @@
     display: flex;
     width: 100%;
     justify-content: flex-end;
-
-    .button-settings {
-      width: 32px;
-      height: 32px;
-      background-image: url('../assets/svg/settings.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
   }
 
   .main-start {
@@ -59,18 +50,6 @@
     margin-top: auto;
     margin-bottom: 40px;
     gap: 15px;
-
-    .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 166px;
-      height: 62px;
-      background-image: url('../assets/svg/logo.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
 
     .select-quiz {
       display: flex;

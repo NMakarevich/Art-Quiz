@@ -83,8 +83,8 @@ module.exports = ({ development }) => ({
           noErrorOnMissing: true,
         },
         {
-          from: './src/assets/fonts/weather',
-          to: './assets/fonts',
+          from: './src/assets/img',
+          to: './assets/img',
           noErrorOnMissing: true
         },
         {

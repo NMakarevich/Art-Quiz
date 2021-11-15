@@ -47,7 +47,7 @@ export default class SettingsScreen {
   }
 
   getSettings = () => {
-    this.settings = JSON.parse(localStorage.getItem('artQuizSettings')) || this.settingsDefault();
+    this.settings = JSON.parse(localStorage.getItem('artQuizSettings'));
     return this.settings;
   }
 

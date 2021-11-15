@@ -21,6 +21,7 @@ export default class StartScreen {
 
   render() {
     this._container = createElement('start-screen', this.startScreenTemplate())
+    this.getSettings();
     this.eventListeners();
   }
 
@@ -32,7 +33,6 @@ export default class StartScreen {
   selectQuiz = (event) => {
     const target = event.target;
     if (!target.dataset.quiz) return;
-
     const evt = new CustomEvent('select-quiz', {
       detail: target.dataset.quiz,
       bubbles: true
@@ -41,8 +41,22 @@ export default class StartScreen {
     this.elem.dispatchEvent(evt)
   }
 
+  getSettings = () => {
+    this.settings = JSON.parse(localStorage.getItem('artQuizSettings')) || this.settingsDefault();
+  }
+
+  settingsDefault = () => {
+    this.settings = {
+      "volume": 0.5,
+      "time": false,
+      "timePerAnswer": 20
+    }
+    localStorage.setItem('artQuizSettings', JSON.stringify(this.settings));
+  }
+
   openSettings = () => {
     const event = new CustomEvent('open-settings', {
+      detail: this,
       bubbles: true
     });
     this.elem.dispatchEvent(event)
@@ -62,8 +76,8 @@ export default class StartScreen {
       <main class="main-start">
         <div class="logo"></div>
         <div class="select-quiz">
-          <button type="button" class="button button-quiz" data-quiz="artist">Artist quiz</button>
-          <button type="button" class="button button-quiz" data-quiz="pictures">Pictures quiz</button>
+          <button type="button" class="button button-quiz" data-quiz="Artist">Artist quiz</button>
+          <button type="button" class="button button-quiz" data-quiz="Pictures">Pictures quiz</button>
         </div>
       </main>
       <footer class="footer footer-start">

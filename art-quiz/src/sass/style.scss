@@ -6,6 +6,25 @@
 
 @import 'startScreen';
 @import 'settingsScreen';
+@import 'levelsScreen';
+
+@keyframes show {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
 
 html {
   display: flex;
@@ -39,4 +58,25 @@ body {
   &:hover {
     opacity: 1;
   }
+
+  &-settings {
+    width: 32px;
+    height: 32px;
+    background-image: url('../assets/svg/settings.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 166px;
+  height: 62px;
+  background-image: url('../assets/svg/logo.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
