@@ -77,7 +77,8 @@ export default class Levels {
     const evt = new CustomEvent('run-quiz', {
       detail: {
         level: target.closest('.level-card').dataset.level,
-        quiz: this.quiz
+        quiz: this.quiz,
+        data: this.data
       },
       bubbles: true
     })

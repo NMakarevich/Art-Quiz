@@ -1,4 +1,5 @@
 import Levels from './js/levelsScreen';
+import Quiz from './js/quiz';
 import SettingsScreen from './js/settingsScreen';
 import StartScreen from './js/startScreen'
 import './sass/style.scss'
@@ -39,5 +40,6 @@ document.addEventListener('to-start', () => {
 })
 
 document.addEventListener('run-quiz', (event) => {
-
+  const quiz = new Quiz(event.detail)
+  
 })
