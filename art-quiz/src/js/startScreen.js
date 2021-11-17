@@ -2,25 +2,25 @@ import createElement from "./createElement";
 
 export default class StartScreen {
   constructor() {
-    this._container = null;
+    this.container = null;
 
     this.render();
   }
 
   get elem() {
-    return this._container;
+    return this.container;
   }
 
   get settingsButton() {
-    return this._container.querySelector('.button-settings')
+    return this.container.querySelector('.button-settings')
   }
 
   get quizButtons() {
-    return this._container.querySelector('.select-quiz');
+    return this.container.querySelector('.select-quiz');
   }
 
   render() {
-    this._container = createElement('start-screen', this.startScreenTemplate())
+    this.container = createElement('start-screen', this.startScreenTemplate())
     this.getSettings();
     this.eventListeners();
   }
@@ -31,7 +31,7 @@ export default class StartScreen {
   }
 
   selectQuiz = (event) => {
-    const target = event.target;
+    const {target} = event;
     if (!target.dataset.quiz) return;
     const evt = new CustomEvent('select-quiz', {
       detail: target.dataset.quiz,
@@ -47,9 +47,9 @@ export default class StartScreen {
 
   settingsDefault = () => {
     this.settings = {
-      "volume": 0.5,
-      "time": false,
-      "timePerAnswer": 20
+      volume: 0.5,
+      time: false,
+      timePerAnswer: 20
     }
     localStorage.setItem('artQuizSettings', JSON.stringify(this.settings));
   }

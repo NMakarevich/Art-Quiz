@@ -1,0 +1,99 @@
+.question-screen {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  animation-name: show;
+  animation-duration: .7s;
+  animation-fill-mode: forwards;
+  &.hide {
+    animation-name: hide;
+    animation-duration: .7s;
+    animation-fill-mode: forwards;
+  }
+  .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    .button-close {
+      width: 16px;
+      height: 16px;
+      background-image: url('../assets/svg/close.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    .timer {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      &.hidden {
+        display: none;
+      }
+      .progress {
+        display: block;
+        flex: 1;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right, #FFBCA2 0%, #FFBCA2 0%, white 0%, white 100%);
+      }
+    }
+  }
+  .question-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    .question {
+      align-self: center;
+      margin-bottom: 20px;
+    }
+    .question-img {
+      width: 100%;
+      img {
+        width: 100%;
+        border-radius: 24px;
+      }
+      &.hidden {
+        display: none;
+      }
+    }
+    .answers {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      display: grid;
+      grid-gap: 15px;
+      grid-template-columns: 1fr 1fr;
+      font-size: 14px;
+      .answer {
+        border-radius: 24px;
+        cursor: pointer;
+        &.artist {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 48px;
+          border: 1px solid white;
+          transition: all .3s;
+          &:hover {
+            color: black;
+            background-color: white;
+          }
+          &:active {
+            background-color: #FFBCA2;
+          }
+        }
+        img {
+          border-radius: 24px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

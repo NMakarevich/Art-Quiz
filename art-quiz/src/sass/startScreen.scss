@@ -63,34 +63,20 @@
         border-radius: 28px;
         font-size: 24px;
         line-height: 28px;
+        transition: all .3s;
+        &:hover {
+          color: black;
+          background-color: white;
+        }
+        &:active {
+          color: black;
+          background-color: #FFBCA2;
+        }
       }
     }
   }
 
   .footer-start {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-
-    a {
-      &.school-logo {
-        display: block;
-        width: 61px;
-        height: 23px;
-        background-image: url('../assets/svg/rs_school_logo.svg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-      color: white;
-      text-decoration: none;
-      opacity: .8;
-      transition: opacity .3s;
-      &:hover {
-        opacity: 1;
-      }
-    }
+    margin-top: 0;
   }
 }

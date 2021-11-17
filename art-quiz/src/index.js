@@ -41,5 +41,6 @@ document.addEventListener('to-start', () => {
 
 document.addEventListener('run-quiz', (event) => {
   const quiz = new Quiz(event.detail)
-  
+  levels.destroy();
+  levels.elem.addEventListener('animationend', () => container.append(quiz.elem))
 })

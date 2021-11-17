@@ -2,12 +2,12 @@ import createElement from "./createElement";
 
 export default class SettingsScreen {
   constructor() {
-    this._container = null;
+    this.container = null;
     this.settings = null;
   }
 
   render() {
-    this._container = createElement('settings-screen', this.settingsScreenTemplate())
+    this.container = createElement('settings-screen', this.settingsScreenTemplate())
     this.eventListeners();
     this.getSettings();
     this.setSettings();
@@ -15,35 +15,35 @@ export default class SettingsScreen {
   }
 
   get elem() {
-    return this._container;
+    return this.container;
   }
 
   get backButton() {
-    return this._container.querySelector('.button-back')
+    return this.container.querySelector('.button-back')
   }
 
   get timeControl() {
-    return this._container.querySelector('.time-control');
+    return this.container.querySelector('.time-control');
   }
 
   get volumeButton() {
-    return this._container.querySelector('.volume-button')
+    return this.container.querySelector('.volume-button')
   }
 
   get volumeBar() {
-    return this._container.querySelector('#volume')
+    return this.container.querySelector('#volume')
   }
 
   get timeToggle() {
-    return this._container.querySelector('#time-game')
+    return this.container.querySelector('#time-game')
   }
 
   get timePerAnswer() {
-    return this._container.querySelector('#time-answer')
+    return this.container.querySelector('#time-answer')
   }
 
   get settingsButtons() {
-    return this._container.querySelector('.settings-buttons')
+    return this.container.querySelector('.settings-buttons')
   }
 
   getSettings = () => {
@@ -52,23 +52,23 @@ export default class SettingsScreen {
   }
 
   setSettings = () => {
-    this.volumeBar.value = this.settings['volume'];
-    this.timeToggle.checked = this.settings['time'];
-    this.timePerAnswer.value = this.settings['timePerAnswer'];
+    this.volumeBar.value = this.settings.volume;
+    this.timeToggle.checked = this.settings.time;
+    this.timePerAnswer.value = this.settings.timePerAnswer;
   }
 
   saveSettings = () => {
-    this.settings['volume'] = this.volumeBar.value;
-    this.settings['time'] = this.timeToggle.checked;
-    this.settings['timePerAnswer'] = this.timePerAnswer.value;
+    this.settings.volume = this.volumeBar.value;
+    this.settings.time = this.timeToggle.checked;
+    this.settings.timePerAnswer = this.timePerAnswer.value;
     localStorage.setItem('artQuizSettings', JSON.stringify(this.settings))
   }
 
   settingsDefault = () => {
     this.settings = {
-      "volume": 0.5,
-      "time": false,
-      "timePerAnswer": 20
+      volume: 0.5,
+      time: false,
+      timePerAnswer: 20
     }
     localStorage.setItem('artQuizSettings', JSON.stringify(this.settings));
     this.setSettings();
@@ -82,7 +82,7 @@ export default class SettingsScreen {
 
   updateVolume = () => {
     this.volumeBar.style.background = `linear-gradient(to right, #FFBCA2 0%, #FFBCA2 ${this.volumeBar.value * 100}%, #A4A4A4 ${this.volumeBar.value * 100}%, #A4A4A4 100%)`
-    if (this.volumeBar.value == 0) {
+    if (this.volumeBar.value === 0) {
       this.volumeButton.classList.remove('active');
     }
     else {
@@ -111,7 +111,7 @@ export default class SettingsScreen {
   }
 
   changeTime = (event) => {
-    const target = event.target;
+    const {target} = event;
     const input = this.timeControl.querySelector('input')
     if (target.tagName !== 'BUTTON') return;
 
@@ -124,7 +124,7 @@ export default class SettingsScreen {
   }
 
   applySettings = (event) => {
-    const target = event.target;
+    const {target} = event;
     if (target.tagName !== 'BUTTON') return;
     
     if (target.classList.contains('button-default')) this.settingsDefault();
@@ -173,7 +173,7 @@ export default class SettingsScreen {
       <button type="button" class="button button-save">Save</button>
     </div>
   </main>
-  <footer class="footer footer-settings">
+  <footer class="footer">
     <a href="http://rs.school/js" class="school-logo" target="_blank"></a>
     <a href="https://github.com/NMakarevich" target="_blank">My GitHub</a>
     <span>2021</span>

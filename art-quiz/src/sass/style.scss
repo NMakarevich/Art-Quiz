@@ -7,6 +7,7 @@
 @import 'startScreen';
 @import 'settingsScreen';
 @import 'levelsScreen';
+@import 'questionScreen';
 
 @keyframes show {
   from {
@@ -36,6 +37,7 @@ body {
   display: flex;
   min-width: 360px;
   width: 100%;
+  color: white;
 }
 
 .container {
@@ -79,4 +81,32 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+
+  a {
+    &.school-logo {
+      display: block;
+      width: 61px;
+      height: 23px;
+      background-image: url('../assets/svg/rs_school_logo.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    color: white;
+    text-decoration: none;
+    opacity: .8;
+    transition: opacity .3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

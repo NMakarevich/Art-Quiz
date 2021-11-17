@@ -3,7 +3,7 @@ import createElement from "./createElement";
 export default class Levels {
   constructor(quiz) {
     this.quiz = quiz;
-    this._container = null;
+    this.container = null;
     this.data = null;
     this.levelsNumber = 0;
     this.playedLevels = null;
@@ -12,12 +12,12 @@ export default class Levels {
   async render() {
     await this.getDataList();
     this.getLocalStorageData();
-    this._container = createElement('levels-screen', this.levelsTemplate(this.levelsNumber));
+    this.container = createElement('levels-screen', this.levelsTemplate(this.levelsNumber));
     this.eventListeners();
   }
 
   get elem() {
-    return this._container;
+    return this.container;
   }
 
   destroy() {
@@ -45,15 +45,15 @@ export default class Levels {
   }
 
   get settingsButton() {
-    return this._container.querySelector('.button-settings');
+    return this.container.querySelector('.button-settings');
   }
 
   get homeButton() {
-    return this._container.querySelector('.home');
+    return this.container.querySelector('.home');
   }
 
   get levelsContainer() {
-    return this._container.querySelector('.levels-container');
+    return this.container.querySelector('.levels-container');
   }
 
   goToStartScreen = () => {
@@ -72,7 +72,7 @@ export default class Levels {
   }
 
   runLevel = (event) => {
-    const target = event.target;
+    const {target} = event;
     if (!target.closest('.level-card')) return;
     const evt = new CustomEvent('run-quiz', {
       detail: {
@@ -117,8 +117,8 @@ export default class Levels {
 
   cardTemplate(levelsNumber) {
     let html = '';
-    const startNum = this.quiz == 'Artist' ? 0 : 120;
-    for (let i = 0; i < levelsNumber; i++) {
+    const startNum = this.quiz === 'Artist' ? 0 : 120;
+    for (let i = 0; i < levelsNumber; i += 1) {
       html += `<div class="level-card ${this.playedLevels[i] == null ? 'not-played' : ''}" data-level="${i}">
       <header class="card-header">
         <span class="level-number">Level ${i + 1}</span>
