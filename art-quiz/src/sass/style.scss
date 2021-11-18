@@ -1,13 +1,13 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
-@import 'startScreen';
-@import 'settingsScreen';
-@import 'levelsScreen';
-@import 'questionScreen';
+@import "startScreen";
+@import "settingsScreen";
+@import "levelsScreen";
+@import "questionScreen";
 
 @keyframes show {
   from {
@@ -54,8 +54,8 @@ body {
   border: none;
   color: white;
   cursor: pointer;
-  opacity: .8;
-  transition: opacity .3s;
+  opacity: 0.8;
+  transition: opacity 0.3s;
 
   &:hover {
     opacity: 1;
@@ -64,7 +64,7 @@ body {
   &-settings {
     width: 32px;
     height: 32px;
-    background-image: url('../assets/svg/settings.svg');
+    background-image: url("../assets/svg/settings.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -77,7 +77,7 @@ body {
   align-items: center;
   width: 166px;
   height: 62px;
-  background-image: url('../assets/svg/logo.svg');
+  background-image: url("../assets/svg/logo.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -96,15 +96,15 @@ body {
       display: block;
       width: 61px;
       height: 23px;
-      background-image: url('../assets/svg/rs_school_logo.svg');
+      background-image: url("../assets/svg/rs_school_logo.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
     }
     color: white;
     text-decoration: none;
-    opacity: .8;
-    transition: opacity .3s;
+    opacity: 0.8;
+    transition: opacity 0.3s;
     &:hover {
       opacity: 1;
     }

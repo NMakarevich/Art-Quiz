@@ -1,10 +1,10 @@
-import Levels from './js/levelsScreen';
-import Quiz from './js/quiz';
-import SettingsScreen from './js/settingsScreen';
-import StartScreen from './js/startScreen'
-import './sass/style.scss'
+import Levels from "./js/levelsScreen";
+import Quiz from "./js/quiz";
+import SettingsScreen from "./js/settingsScreen";
+import StartScreen from "./js/startScreen";
+import "./sass/style.scss";
 
-const container = document.querySelector('.container');
+const container = document.querySelector(".container");
 
 const startScreen = new StartScreen();
 const settingsScreen = new SettingsScreen();
@@ -13,34 +13,44 @@ container.append(startScreen.elem);
 
 let settingsSource;
 
-document.addEventListener('open-settings', (event) => {
+document.addEventListener("open-settings", (event) => {
   settingsScreen.render();
   settingsSource = event.detail;
   settingsSource.destroy();
-  settingsSource.elem.addEventListener('animationend', () => container.append(settingsScreen.elem))
-})
+  settingsSource.elem.addEventListener("animationend", () =>
+    container.append(settingsScreen.elem)
+  );
+});
 
-document.addEventListener('close-settings', () => {
+document.addEventListener("close-settings", () => {
   settingsSource.render();
   settingsScreen.destroy();
-  settingsScreen.elem.addEventListener('animationend', () => container.append(settingsSource.elem))
-})
+  settingsScreen.elem.addEventListener("animationend", () =>
+    container.append(settingsSource.elem)
+  );
+});
 
-document.addEventListener('select-quiz', async (event) => {
+document.addEventListener("select-quiz", async (event) => {
   levels = new Levels(event.detail);
   await levels.render();
   startScreen.destroy();
-  startScreen.elem.addEventListener('animationend', () => container.append(levels.elem))
-})
+  startScreen.elem.addEventListener("animationend", () =>
+    container.append(levels.elem)
+  );
+});
 
-document.addEventListener('to-start', () => {
+document.addEventListener("to-start", () => {
   startScreen.render();
   levels.destroy();
-  levels.elem.addEventListener('animationend', () => container.append(startScreen.elem))
-})
+  levels.elem.addEventListener("animationend", () =>
+    container.append(startScreen.elem)
+  );
+});
 
-document.addEventListener('run-quiz', (event) => {
-  const quiz = new Quiz(event.detail)
+document.addEventListener("run-quiz", (event) => {
+  const quiz = new Quiz(event.detail);
   levels.destroy();
-  levels.elem.addEventListener('animationend', () => container.append(quiz.elem))
-})
+  levels.elem.addEventListener("animationend", () =>
+    container.append(quiz.elem)
+  );
+});

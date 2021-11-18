@@ -6,12 +6,12 @@
   width: 100%;
   height: 100%;
   animation-name: show;
-  animation-duration: .7s;
+  animation-duration: 0.7s;
   animation-fill-mode: forwards;
   color: white;
   &.hide {
     animation-name: hide;
-    animation-duration: .7s;
+    animation-duration: 0.7s;
     animation-fill-mode: forwards;
   }
 
@@ -24,7 +24,7 @@
     .button-back {
       width: 32px;
       height: 32px;
-      background-image: url('../assets/svg/arrow-back.svg');
+      background-image: url("../assets/svg/arrow-back.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -32,7 +32,7 @@
     span {
       font-size: 24px;
       line-height: 28px;
-      transform: translateX(-16px)
+      transform: translateX(-16px);
     }
   }
 
@@ -58,19 +58,19 @@
         button {
           width: 24px;
           height: 16px;
-          background-image: url('../assets/svg/mute.svg');
+          background-image: url("../assets/svg/mute.svg");
           background-position: left;
           background-repeat: no-repeat;
-          transition: all .3s;
+          transition: all 0.3s;
           &.active {
-            background-image: url('../assets/svg/volume.svg');
+            background-image: url("../assets/svg/volume.svg");
           }
         }
         input {
           appearance: none;
           flex: 1;
           height: 3px;
-          background-color: #A4A4A4;
+          background-color: #a4a4a4;
           &::-webkit-slider-thumb {
             appearance: none;
             width: 8px;
@@ -89,7 +89,7 @@
           gap: 15px;
           font-size: 24px;
           line-height: 28px;
-          
+
           input {
             position: absolute;
             width: 0;
@@ -103,7 +103,7 @@
             width: 48px;
             height: 24px;
             border-radius: 12px;
-            background-color: #FFBCA2;
+            background-color: #ffbca2;
             cursor: pointer;
             &::before {
               position: absolute;
@@ -113,7 +113,7 @@
               border-radius: 50%;
               background-color: rgba(255, 255, 255, 0.8);
               transform: translateX(4px);
-              transition: transform .3s;
+              transition: transform 0.3s;
             }
           }
           input:checked + .toggle::before {
@@ -140,7 +140,6 @@
           &::-webkit-outer-spin-button {
             appearance: none;
           }
-          
         }
 
         .button {
@@ -151,7 +150,7 @@
           color: black;
           font-size: 24px;
           &:hover {
-            background-color: #FFBCA2;
+            background-color: #ffbca2;
           }
         }
       }
@@ -165,16 +164,15 @@
         height: 56px;
         border: 1px solid white;
         border-radius: 28px;
-        font-size: 24px;
-        line-height: 28px;
+        font-size: 20px;
+        line-height: 24px;
 
         &-save {
-          background-color: #FFBCA2;
-          border-color: #FFBCA2;
+          background-color: #ffbca2;
+          border-color: #ffbca2;
           color: black;
         }
       }
     }
   }
 }
-

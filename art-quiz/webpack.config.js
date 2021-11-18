@@ -1,99 +1,100 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
-const devServer = (isDev) => !isDev ? {} : {
-  devServer: {
-    open: true,
-    port: 8080,
-    static: {
-      directory: path.join(__dirname, 'public'),
-    },
-  },
-};
+const devServer = (isDev) =>
+  !isDev
+    ? {}
+    : {
+        devServer: {
+          open: true,
+          port: 8080,
+          static: {
+            directory: path.join(__dirname, "public"),
+          },
+        },
+      };
 
 module.exports = ({ development }) => ({
-  mode: development ? 'development' : 'production',
-  devtool: development ? 'inline-source-map' : false,
-  entry: './src/index.js',
+  mode: development ? "development" : "production",
+  devtool: development ? "inline-source-map" : false,
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    assetModuleFilename: 'assets/'
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    assetModuleFilename: "assets/",
   },
-  mode: 'development',
-  devtool: 'inline-source-map',
   optimization: {
-    minimize: false
+    minimize: false,
   },
   module: {
     rules: [
       {
         test: /\.(?:gif|png|jpg|jpeg)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'assets/img/[name][ext]'
-        }
+          filename: "assets/img/[name][ext]",
+        },
       },
       {
         test: /\.svg$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'assets/svg/[name][ext]'
-        }
+          filename: "assets/svg/[name][ext]",
+        },
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
-          filename: 'assets/fonts/[name][ext]'
-        }
+          filename: "assets/fonts/[name][ext]",
+        },
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.html$/i,
-        use: ['html-loader']
-      }
-    ]
+        use: ["html-loader"],
+      },
+    ],
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: './src/index.html',
+      template: "./src/index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: "style.css",
     }),
     new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: false
+      cleanStaleWebpackAssets: false,
     }),
     new CopyPlugin({
       patterns: [
         {
-          from: './src/assets/svg',
-          to: './assets/svg',
+          from: "./src/assets/svg",
+          to: "./assets/svg",
           noErrorOnMissing: true,
         },
         {
-          from: './src/assets/img',
-          to: './assets/img',
-          noErrorOnMissing: true
+          from: "./src/assets/img",
+          to: "./assets/img",
+          noErrorOnMissing: true,
         },
         {
-          from: './src/json',
-          to: './json',
-          noErrorOnMissing: true
-        }
-      ]
+          from: "./src/json",
+          to: "./json",
+          noErrorOnMissing: true,
+        },
+      ],
     }),
   ],
-  ...devServer(development)
+  ...devServer(development),
 });

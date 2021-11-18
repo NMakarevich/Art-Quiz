@@ -9,11 +9,11 @@
   padding: 10px;
   color: white;
   animation-name: show;
-  animation-duration: .7s;
+  animation-duration: 0.7s;
   animation-fill-mode: forwards;
   &.hide {
     animation-name: hide;
-    animation-duration: .7s;
+    animation-duration: 0.7s;
     animation-fill-mode: forwards;
   }
 
@@ -93,14 +93,14 @@
           background-repeat: no-repeat;
           background-size: 22px 22px;
           &.home {
-            background-image: url('../assets/svg/home.svg');
+            background-image: url("../assets/svg/home.svg");
           }
           &.categories {
-            background-image: url('../assets/svg/categories.svg');
-            color: #FFBCA2;
+            background-image: url("../assets/svg/categories.svg");
+            color: #ffbca2;
           }
           &.score {
-            background-image: url('../assets/svg/score.svg');
+            background-image: url("../assets/svg/score.svg");
           }
         }
       }
