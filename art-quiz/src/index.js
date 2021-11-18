@@ -31,10 +31,10 @@ document.addEventListener("close-settings", () => {
 });
 
 document.addEventListener("select-quiz", async (event) => {
-  levels = new Levels(event.detail);
+  levels = new Levels(event.detail.quiz);
   await levels.render();
-  startScreen.destroy();
-  startScreen.elem.addEventListener("animationend", () =>
+  event.detail.source.destroy();
+  event.detail.source.elem.addEventListener("animationend", () =>
     container.append(levels.elem)
   );
 });

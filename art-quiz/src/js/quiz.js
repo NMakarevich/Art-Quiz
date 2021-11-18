@@ -6,8 +6,10 @@ export default class Quiz {
     this.quiz = quiz;
     this.data = data;
     this.container = null;
+    this.modal = null;
     this.levelList = [];
     this.answersList = [];
+    this.userAnswers = [];
     this.questionNum = 0;
     this.render();
   }
@@ -16,12 +18,14 @@ export default class Quiz {
     this.createLevelList();
     this.createAnsewrsList();
     this.getSettings();
+    this.createModalsTemplates();
     this.container = createElement("question-screen", this.questionTemplate());
+    this.eventListeners();
   }
 
   destroy() {
     this.elem.classList.add("hide");
-    this.elem.addEventListener("animationend", () => this.elem.remove())
+    this.elem.addEventListener("animationend", () => this.elem.remove());
   }
 
   get elem() {
@@ -32,17 +36,77 @@ export default class Quiz {
     return this.container.querySelector('.button-close');
   }
 
+  get answers() {
+    return this.container.querySelector('.answers');
+  }
+
+  renderModal(modalName, modalTemplate) {
+    this.modal = createElement(modalName, modalTemplate);
+    this.container.append(this.modal);
+    this.modal.addEventListener('click', this.modalClick)
+  }
+
+  destroyModal() {
+    this.modal.classList.add('hide');
+    this.modal.addEventListener('animationend', () => this.modal.remove())
+  }
+
   getSettings = () => {
     this.settings = JSON.parse(localStorage.getItem("artQuizSettings"));
   };
 
   createLevelList() {
     this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
+  };
+
+  nextQuestion = () => {
+    this.container.classList.add("hide");
+    this.destroyModal();
+    this.questionNum += 1;
+    this.container.innerHTML = this.questionTemplate();
+    this.container.classList.remove("hide")
+    this.eventListeners();
+  };
+
+  selectAnswer = (event) => {
+    const {target} = event;
+    if (!target.classList.contains('answer')) return;
+    
+    const {answer} = target.dataset;
+    if (this.quiz === 'Artist') this.userAnswers.push(answer === this.levelList[this.questionNum].author);
+    else this.userAnswers.push(answer === this.levelList[this.questionNum].imageNum);
+
+    this.createModalsTemplates();    
+    this.renderModal(this.modalsTemplates.modalAnswer.name, this.modalsTemplates.modalAnswer.template);
+    this.modal.querySelector('.user-answer').classList.add(this.userAnswers[this.questionNum])
   }
 
-  nextQuestion() {
-    this.container.classList.add("hide");
-    this.questionNum += 1;
+  showModalClose = () => {
+    if (this.container.querySelector('.modal')) return;
+    this.renderModal(this.modalsTemplates.modalClose.name, this.modalsTemplates.modalClose.template);
+  }
+
+  modalClick = (event) => {
+    const {target} = event;
+    if (target.tagName !== "BUTTON") return;
+    if (target.classList.contains('button-cancel')) this.destroyModal();
+    if (target.classList.contains('button-exit')) {
+      this.destroyModal();
+      const evt = new CustomEvent('select-quiz', {
+        detail: {
+          quiz: this.quiz,
+          source: this
+        },
+        bubbles: true
+      })
+      this.elem.dispatchEvent(evt)
+    }
+    if (target.classList.contains('button-next')) this.nextQuestion();
+  }
+
+  eventListeners() {
+    this.closeButton.addEventListener('click', this.showModalClose);
+    this.answers.addEventListener('click', this.selectAnswer)
   }
 
   createAnsewrsList() {
@@ -77,6 +141,48 @@ export default class Quiz {
         answers[k] = temp;
       }
       this.answersList.push(answers);
+    }
+  }
+
+  createModalsTemplates() {
+    this.modalsTemplates = {
+      modalClose: {
+        name: "modal modal-close",
+        template: `
+          <p>Вы точно хотите завершить игру?</p>
+          <div class="buttons modal-buttons">
+            <button type="button" class="button button-cancel">Отмена</button>
+            <button type="button" class="button button-exit">Завершить</button>
+          </div>
+        `
+      },
+      modalAnswer: {
+        name: "modal modal-answer",
+        template: `
+          <div class="question-img">
+            <div class="user-answer"></div>
+            <img src="../assets/img/arts/full/${this.levelList[this.questionNum].imageNum}full.jpg" alt="${this.levelList[this.questionNum].imageNum}">
+          </div>
+          <div class="image-data">
+            <p class="image-name">${this.levelList[this.questionNum].name}</p>
+            <p class="image-author">${this.levelList[this.questionNum].author}</p>
+            <p class="image-year">${this.levelList[this.questionNum].year}</p> 
+          </div>
+          <button type="button" class="button ${this.questionNum !== 9 ? "button-next" : "button-results"}">
+            ${this.questionNum !== 9 ? "Далее" : "Результат"}
+          </button>
+        `
+      },
+      modalResults: {
+        name: "modal modal-results",
+        template: `
+          <div class="results"></div>
+          <div class="modal-buttons">
+            <button type="button" class="button button-categories">К категориям</button>
+            <button type="button" class="button button-next-quiz" ${this.level === 11 ? "disabled" : ""}>Следующий уровень</button>
+          </div>
+        `
+      }
     }
   }
 
@@ -120,7 +226,7 @@ export default class Quiz {
   }
 
   answersTemplate() {
-    return this.answersList[0]
+    return this.answersList[this.questionNum]
       .map(
         (item) => `<div class="answer ${
           this.quiz === "Artist" ? "artist" : ""

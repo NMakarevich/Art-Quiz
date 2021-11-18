@@ -34,7 +34,10 @@ export default class StartScreen {
     const { target } = event;
     if (!target.dataset.quiz) return;
     const evt = new CustomEvent("select-quiz", {
-      detail: target.dataset.quiz,
+      detail: {
+        quiz: target.dataset.quiz,
+        source: this
+      },
       bubbles: true,
     });
 
@@ -87,6 +90,6 @@ export default class StartScreen {
         <a href="https://github.com/NMakarevich" target="_blank">My GitHub</a>
         <span>2021</span>
       </footer>
-    `;
+    `
   }
 }
