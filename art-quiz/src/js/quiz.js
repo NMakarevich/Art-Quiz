@@ -70,7 +70,7 @@ export default class Quiz {
 
   selectAnswer = (event) => {
     const {target} = event;
-    if (!target.classList.contains('answer')) return;
+    if (!target.classList.contains('answer') || this.container.querySelector('.modal')) return;
     
     const {answer} = target.dataset;
     if (this.quiz === 'Artist') this.userAnswers.push(answer === this.levelList[this.questionNum].author);
@@ -213,7 +213,7 @@ export default class Quiz {
         template: `
           <div class="results">${this.userAnswers.filter(item => item).length}/10</div>
           <div class="modal-buttons">
-            <button type="button" class="button button-exit">К категориям</button>
+            <button type="button" class="button button-exit">К уровням</button>
             <button type="button" class="button button-next-quiz" ${this.level === 11 ? "disabled" : ""}>Следующий уровень</button>
           </div>
         `

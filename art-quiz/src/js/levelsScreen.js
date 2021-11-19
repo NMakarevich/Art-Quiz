@@ -84,7 +84,7 @@ export default class Levels {
     if (!target.closest(".level-card")) return;
     const evt = new CustomEvent("run-quiz", {
       detail: {
-        level: target.closest(".level-card").dataset.level,
+        level: Number(target.closest(".level-card").dataset.level),
         quiz: this.quiz,
         data: this.data,
         source: this
@@ -117,7 +117,7 @@ export default class Levels {
           <ul class="nav-list">
             <li class="nav-list--item home"><span>На главную</span></li>
             <li class="nav-list--item categories"><span>Уровни</span></li>
-            <li class="nav-list--item score"><span>Счёт</span></li>
+            <li class="nav-list--item score"><span>Результаты</span></li>
           </ul>
         </nav>
       </footer>
