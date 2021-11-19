@@ -49,8 +49,8 @@ document.addEventListener("to-start", () => {
 
 document.addEventListener("run-quiz", (event) => {
   const quiz = new Quiz(event.detail);
-  levels.destroy();
-  levels.elem.addEventListener("animationend", () =>
+  event.detail.source.destroy();
+  event.detail.source.elem.addEventListener("animationend", () =>
     container.append(quiz.elem)
   );
 });

@@ -40,8 +40,8 @@ export default class Quiz {
     return this.container.querySelector('.answers');
   }
 
-  renderModal(modalName, modalTemplate) {
-    this.modal = createElement(modalName, modalTemplate);
+  renderModal({name, template}) {
+    this.modal = createElement(name, template);
     this.container.append(this.modal);
     this.modal.addEventListener('click', this.modalClick)
   }
@@ -76,22 +76,35 @@ export default class Quiz {
     if (this.quiz === 'Artist') this.userAnswers.push(answer === this.levelList[this.questionNum].author);
     else this.userAnswers.push(answer === this.levelList[this.questionNum].imageNum);
 
-    this.createModalsTemplates();    
-    this.renderModal(this.modalsTemplates.modalAnswer.name, this.modalsTemplates.modalAnswer.template);
-    this.modal.querySelector('.user-answer').classList.add(this.userAnswers[this.questionNum])
+    this.showModalAnswer();
   }
 
   showModalClose = () => {
     if (this.container.querySelector('.modal')) return;
-    this.renderModal(this.modalsTemplates.modalClose.name, this.modalsTemplates.modalClose.template);
+    this.renderModal(this.modalsTemplates.modalClose);
   }
 
-  modalClick = (event) => {
-    const {target} = event;
-    if (target.tagName !== "BUTTON") return;
-    if (target.classList.contains('button-cancel')) this.destroyModal();
-    if (target.classList.contains('button-exit')) {
-      this.destroyModal();
+  showModalAnswer = () => {
+    this.createModalsTemplates();    
+    this.renderModal(this.modalsTemplates.modalAnswer);
+    this.modal.querySelector('.user-answer').classList.add(this.userAnswers[this.questionNum])
+  }
+
+  showModalResult = () => {
+    this.destroyModal();
+    this.createModalsTemplates();
+    setTimeout(() => this.renderModal(this.modalsTemplates.modalResults), 500)
+    this.writeResultsToLS();
+  }
+
+  writeResultsToLS() {
+    const LSResults = JSON.parse(localStorage.getItem(`artQuiz${this.quiz}`));
+    LSResults[this.level] = this.userAnswers
+    localStorage.setItem(`artQuiz${this.quiz}`, JSON.stringify(LSResults))
+  }
+
+  toLevels = () => {
+    this.destroyModal();
       const evt = new CustomEvent('select-quiz', {
         detail: {
           quiz: this.quiz,
@@ -99,9 +112,31 @@ export default class Quiz {
         },
         bubbles: true
       })
-      this.elem.dispatchEvent(evt)
-    }
+    this.elem.dispatchEvent(evt)
+  }
+
+  modalClick = (event) => {
+    const {target} = event;
+    if (target.tagName !== "BUTTON") return;
+    if (target.classList.contains('button-cancel')) this.destroyModal();
+    if (target.classList.contains('button-exit')) this.toLevels();
+      
     if (target.classList.contains('button-next')) this.nextQuestion();
+    if (target.classList.contains('button-results')) this.showModalResult();
+    if (target.classList.contains('button-next-quiz')) this.nextQuiz();
+  }
+
+  nextQuiz = () => {
+    const event = new CustomEvent('run-quiz', {
+      detail: {
+        level: this.level + 1,
+        quiz: this.quiz,
+        data: this.data,
+        source: this
+      },
+      bubbles: true
+    })
+    this.elem.dispatchEvent(event)
   }
 
   eventListeners() {
@@ -176,9 +211,9 @@ export default class Quiz {
       modalResults: {
         name: "modal modal-results",
         template: `
-          <div class="results"></div>
+          <div class="results">${this.userAnswers.filter(item => item).length}/10</div>
           <div class="modal-buttons">
-            <button type="button" class="button button-categories">К категориям</button>
+            <button type="button" class="button button-exit">К категориям</button>
             <button type="button" class="button button-next-quiz" ${this.level === 11 ? "disabled" : ""}>Следующий уровень</button>
           </div>
         `

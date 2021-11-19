@@ -87,6 +87,7 @@ export default class Levels {
         level: target.closest(".level-card").dataset.level,
         quiz: this.quiz,
         data: this.data,
+        source: this
       },
       bubbles: true,
     });
