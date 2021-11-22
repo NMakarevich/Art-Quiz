@@ -270,7 +270,7 @@ export default class Quiz {
         template: `
           <div class="question-img">
             <div class="user-answer"></div>
-            <img src="../assets/img/arts/full/${
+            <img src="./assets/img/arts/full/${
               this.levelList[this.questionNum].imageNum
             }full.jpg" alt="${this.levelList[this.questionNum].imageNum}">
           </div>

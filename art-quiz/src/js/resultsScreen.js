@@ -136,7 +136,7 @@ export default class Results {
   modalTemplate(index) {
     return `
     <div class="question-img">
-      <img src="../assets/img/arts/full/${this.levelList[index].imageNum}full.jpg" alt="${this.levelList[index].imageNum}">
+      <img src="./assets/img/arts/full/${this.levelList[index].imageNum}full.jpg" alt="${this.levelList[index].imageNum}">
     </div>
     <div class="image-data">
       <p class="image-name">${this.levelList[index].name}</p>
