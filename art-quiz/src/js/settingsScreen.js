@@ -9,7 +9,7 @@ export default class SettingsScreen {
   render() {
     this.getSettings();
     this.container = createElement(
-      "settings-screen",
+      "screen settings-screen",
       this.settingsScreenTemplate()
     );
     this.eventListeners();
@@ -150,7 +150,7 @@ export default class SettingsScreen {
     <span>Настройки</span>
     <span></span>
   </header>
-  <main class="main-settings">
+  <main class="main main-settings">
     <div class="setting-item volume">
       <h2>Громкость</h2>
       <div class="volume-control">

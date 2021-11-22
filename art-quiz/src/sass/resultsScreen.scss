@@ -1,20 +1,6 @@
 .result-screen {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vh;
-  height: 100%;
-  padding: 10px;
   color: white;
-  animation-name: show;
-  animation-duration: 0.7s;
-  animation-fill-mode: forwards;
-  &.hide {
-    animation-name: hide;
-    animation-duration: 0.7s;
-    animation-fill-mode: forwards;
-  }
 
   .header-levels {
     width: 100%;
@@ -22,12 +8,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    .nav-list {
+      display: none;
+    }
   }
 
-  main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  .main-results {
     gap: 20px;
 
     .answers-container {
@@ -52,7 +39,7 @@
     }
   }
 
-  .levels-footer {
+  .footer-levels {
     position: fixed;
     top: calc(100vh - 61px);
     width: 100%;

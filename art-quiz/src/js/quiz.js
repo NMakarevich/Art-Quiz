@@ -19,7 +19,10 @@ export default class Quiz {
     this.createAnsewrsList();
     this.getSettings();
     this.createModalsTemplates();
-    this.container = createElement("screen question-screen", this.questionTemplate());
+    this.container = createElement(
+      "screen question-screen",
+      this.questionTemplate()
+    );
     this.eventListeners();
     this.audio = new Audio();
     this.audio.volume = this.settings.volume;
@@ -56,6 +59,10 @@ export default class Quiz {
     return this.container.querySelector(".answers");
   }
 
+  get answersProgress() {
+    return this.container.querySelectorAll(".answers-progress li");
+  }
+
   renderModal({ name, template }) {
     this.modal = createElement(name, template);
     this.container.append(this.modal);
@@ -75,11 +82,17 @@ export default class Quiz {
     this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
   }
 
+  updateProgress() {
+    this.userAnswers.forEach((item, index) => {
+      this.answersProgress[index].classList.add(item);
+    });
+  }
+
   roundTimer() {
     if (!this.settings.time) return;
     const duration = Number(this.settings.timePerAnswer);
     let time = duration + 1;
-        
+
     this.timer = setInterval(() => {
       if (this.userAnswers.length === this.questionNum + 1) {
         clearInterval(this.timer);
@@ -88,7 +101,7 @@ export default class Quiz {
 
       if (this.container.classList.contains("hide")) {
         clearInterval(this.timer);
-        return
+        return;
       }
 
       time -= 1;
@@ -97,15 +110,16 @@ export default class Quiz {
       this.timeIndicator.textContent = `0:${time >= 10 ? time : `0${time}`}`;
       this.timerProgress.style.background = `linear-gradient(to right, #ffbca2 0%, #ffbca2 ${progress}%, white ${progress}%, white 100%)`;
 
-      if (time === 0) {
+      if (time <= 0) {
         clearInterval(this.timer);
-        this.userAnswers[this.questionNum] = false;
+        this.userAnswers.push(false);
+        this.updateProgress();
         this.audio.src = this.audioSources[this.userAnswers[this.questionNum]];
         this.showModalAnswer();
         this.audio.play();
       }
     }, 1000);
-  };
+  }
 
   nextQuestion = () => {
     this.container.classList.add("hide");
@@ -115,6 +129,7 @@ export default class Quiz {
         this.destroyModal();
         this.questionNum += 1;
         this.container.innerHTML = this.questionTemplate();
+        this.updateProgress();
         this.container.classList.remove("hide");
         this.eventListeners();
       },
@@ -138,6 +153,8 @@ export default class Quiz {
       this.userAnswers.push(
         answer === this.levelList[this.questionNum].imageNum
       );
+
+    this.updateProgress();
 
     this.audio.src = this.audioSources[this.userAnswers[this.questionNum]];
 
@@ -300,7 +317,7 @@ export default class Quiz {
       <div class="time">0:${time >= 10 ? time : `0${time}`}</div>
     </div>
   </header>
-  <main class="question-main">
+  <main class="main main-question">
     <p class="question">${question[this.quiz]}</p>
     <div class="question-img ${this.quiz === "Artist" ? "" : "hidden"}">
       ${
@@ -311,6 +328,9 @@ export default class Quiz {
           : ""
       }
     </div>
+    <ul class="answers-progress">
+      ${this.levelList.map(() => `<li></li>`).join("")}
+    </ul>
     <div class="answers">
       ${this.answersTemplate()}
     </div>

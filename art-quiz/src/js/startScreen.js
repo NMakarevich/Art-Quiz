@@ -20,7 +20,10 @@ export default class StartScreen {
   }
 
   render() {
-    this.container = createElement("start-screen", this.startScreenTemplate());
+    this.container = createElement(
+      "screen start-screen",
+      this.startScreenTemplate()
+    );
     this.getSettings();
     this.eventListeners();
   }
@@ -78,7 +81,7 @@ export default class StartScreen {
     <header class="header-start">
         <button type="button" class="button button-settings"></button>
       </header>
-      <main class="main-start">
+      <main class="main main-start">
         <div class="logo"></div>
         <div class="select-quiz">
           <button type="button" class="button button-quiz" data-quiz="Artist">Художники</button>

@@ -1,20 +1,6 @@
 .levels-screen {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vh;
-  height: 100%;
-  padding: 10px;
   color: white;
-  animation-name: show;
-  animation-duration: 0.7s;
-  animation-fill-mode: forwards;
-  &.hide {
-    animation-name: hide;
-    animation-duration: 0.7s;
-    animation-fill-mode: forwards;
-  }
 
   .header-levels {
     width: 100%;
@@ -22,12 +8,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    .nav-list {
+      display: none;
+    }
   }
 
   .main-levels {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     gap: 20px;
 
     .levels-container {
@@ -41,8 +28,19 @@
 
       .level-card {
         width: 160px;
-        height: 190px;
         cursor: pointer;
+        .level-score {
+          display: block;
+          padding: 0 5px;
+          border-radius: 9px;
+          background-color: white;
+          color: black;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          &:hover {
+            background-color: #ffbca2;
+          }
+        }
         &.not-played {
           .level-score {
             display: none;
@@ -67,7 +65,7 @@
     }
   }
 
-  .levels-footer {
+  .footer-levels {
     position: fixed;
     top: calc(100vh - 61px);
     width: 100%;

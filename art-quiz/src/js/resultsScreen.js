@@ -14,7 +14,10 @@ export default class Results {
   render() {
     this.createLevelList();
     this.getAnswersList();
-    this.container = createElement("result-screen", this.resultsTemplate());
+    this.container = createElement(
+      "screen result-screen",
+      this.resultsTemplate()
+    );
     this.eventListeners();
   }
 
@@ -99,8 +102,13 @@ export default class Results {
     return `
     <header class="header-levels">
         <div class="logo"></div>
+        <ul class="nav-list">
+            <li class="nav-list--item home"><span>На главную</span></li>
+            <li class="nav-list--item levels"><span>Уровни</span></li>
+            <li class="nav-list--item results active"><span>Результаты</span></li>
+        </ul>
     </header>
-    <main>
+    <main class="main main-results">
       <h2>${this.quiz === "Artist" ? "Художники" : "Картины"}. Уровень ${
       this.level + 1
     }</h2>
@@ -113,7 +121,7 @@ export default class Results {
           .join("")}
       </div>
     </main>
-    <footer class="levels-footer">
+    <footer class="footer-levels">
       <nav class="footer-nav">
         <ul class="nav-list">
           <li class="nav-list--item home"><span>На главную</span></li>

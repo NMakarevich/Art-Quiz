@@ -1,41 +1,8 @@
-@keyframes showStart {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes hideStart {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
 .start-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
   gap: 30px;
   background-image: url("../assets/img/bgStart.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 10px;
-  animation-name: showStart;
-  animation-duration: 0.7s;
-  animation-fill-mode: forwards;
-
-  &.hide {
-    animation-name: hideStart;
-    animation-duration: 0.7s;
-    animation-fill-mode: forwards;
-  }
 
   .header-start {
     display: flex;
@@ -44,8 +11,6 @@
   }
 
   .main-start {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     margin-top: auto;
     margin-bottom: 40px;

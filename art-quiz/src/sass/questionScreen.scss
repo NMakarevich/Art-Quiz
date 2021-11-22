@@ -17,22 +17,12 @@
 
 .question-screen {
   position: relative;
-  padding: 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  animation-name: show;
-  animation-duration: 0.7s;
-  animation-fill-mode: forwards;
-  &.hide {
-    animation-name: hide;
-    animation-duration: 0.7s;
-    animation-fill-mode: forwards;
-  }
+
   .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     gap: 10px;
     margin-bottom: 35px;
     .button-close {
@@ -68,10 +58,7 @@
       }
     }
   }
-  .question-main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  .main-question {
     font-size: 18px;
     .question {
       align-self: center;
@@ -79,12 +66,37 @@
     }
     .question-img {
       width: 100%;
+      height: 300px;
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
         border-radius: 24px;
       }
       &.hidden {
         display: none;
+      }
+    }
+    .answers-progress {
+      display: none;
+      justify-content: space-between;
+      margin: 0 auto;
+      margin-top: 10px;
+      width: 60%;
+      gap: 15px;
+      list-style: none;
+      li {
+        display: block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid white;
+        &.true {
+          background-color: #3dda69;
+        }
+        &.false {
+          background-color: #ffbca2;
+        }
       }
     }
     .answers {
@@ -135,6 +147,7 @@
     padding: 20px;
     background-color: white;
     color: black;
+    font-size: 20px;
     border-radius: 24px;
     animation-name: show-modal;
     animation-duration: 0.4s;

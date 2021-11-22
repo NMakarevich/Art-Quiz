@@ -13,7 +13,7 @@ export default class Levels {
     await this.getDataList();
     this.getLocalStorageData();
     this.container = createElement(
-      "levels-screen",
+      "screen levels-screen",
       this.levelsTemplate(this.levelsNumber)
     );
     this.eventListeners();
@@ -117,7 +117,9 @@ export default class Levels {
   eventListeners() {
     this.settingsButton.addEventListener("click", this.openSettings);
     this.homeButton.addEventListener("click", this.goToStartScreen);
-    this.levelsContainer.addEventListener("click", this.runLevel);
+    this.levelsContainer.addEventListener("click", this.runLevel, {
+      once: true,
+    });
     this.levelsContainer.addEventListener("click", this.showScore);
   }
 
@@ -125,15 +127,20 @@ export default class Levels {
     return `
     <header class="header-levels">
         <div class="logo"></div>
+        <ul class="nav-list">
+            <li class="nav-list--item home"><span>На главную</span></li>
+            <li class="nav-list--item levels active"><span>Уровни</span></li>
+            <li class="nav-list--item results"><span>Результаты</span></li>
+        </ul>
         <button type="button" class="button button-settings"></button>
       </header>
-      <main class="main-levels">
+      <main class="main main-levels">
         <h2>${this.quiz === "Artist" ? "Художники" : "Картины"}</h2>
         <div class="levels-container">
           ${this.cardTemplate(levelsNumber)}
         </div>
       </main>
-      <footer class="levels-footer">
+      <footer class="footer-levels">
         <nav class="footer-nav">
           <ul class="nav-list">
             <li class="nav-list--item home"><span>На главную</span></li>

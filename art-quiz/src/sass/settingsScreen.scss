@@ -1,19 +1,6 @@
 .settings-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 10px 20px;
-  width: 100%;
-  height: 100%;
-  animation-name: show;
-  animation-duration: 0.7s;
-  animation-fill-mode: forwards;
   color: white;
-  &.hide {
-    animation-name: hide;
-    animation-duration: 0.7s;
-    animation-fill-mode: forwards;
-  }
 
   .header-settings {
     display: flex;
@@ -37,9 +24,6 @@
   }
 
   .main-settings {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     margin: auto;
     gap: 30px;
 
