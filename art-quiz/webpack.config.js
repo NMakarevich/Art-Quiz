@@ -79,13 +79,8 @@ module.exports = ({ development }) => ({
     new CopyPlugin({
       patterns: [
         {
-          from: "./src/assets/svg",
-          to: "./assets/svg",
-          noErrorOnMissing: true,
-        },
-        {
-          from: "./src/assets/img",
-          to: "./assets/img",
+          from: "./src/assets",
+          to: "./assets",
           noErrorOnMissing: true,
         },
         {
