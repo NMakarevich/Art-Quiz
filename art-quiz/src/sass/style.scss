@@ -70,6 +70,13 @@ body {
   }
 }
 
+.nav-list--item {
+  transition: color .3s;
+  &:hover {
+    color: #ffbca2
+  }
+}
+
 .button {
   display: flex;
   justify-content: center;
