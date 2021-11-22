@@ -352,7 +352,7 @@ export default class Quiz {
         ${
           this.quiz === "Artist"
             ? item
-            : `<img src="../assets/img/arts/squared/${item}.jpg" alt="${item}">`
+            : `<img src="./assets/img/arts/squared/${item}.jpg" alt="${item}">`
         }
       </div>`
       )
