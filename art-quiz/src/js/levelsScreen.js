@@ -63,9 +63,25 @@ export default class Levels {
   get levelsContainer() {
     return this.container.querySelector(".levels-container");
   }
+  
+  showScore = (evt) => {
+    const {target} = evt;
+    if (!target.classList.contains('level-score')) return;
+    const event = new CustomEvent('show-results', {
+      detail: {
+        level: Number(target.closest(".level-card").dataset.level),
+        quiz: this.quiz,
+        data: this.data
+      },
+      bubbles: true
+    })
+
+    this.elem.dispatchEvent(event)
+  }
 
   goToStartScreen = () => {
     const event = new CustomEvent("to-start", {
+      detail: this,
       bubbles: true,
     });
     this.elem.dispatchEvent(event);
@@ -81,7 +97,7 @@ export default class Levels {
 
   runLevel = (event) => {
     const { target } = event;
-    if (!target.closest(".level-card")) return;
+    if (!target.closest(".level-card") || target.classList.contains('level-score')) return;
     const evt = new CustomEvent("run-quiz", {
       detail: {
         level: Number(target.closest(".level-card").dataset.level),
@@ -98,6 +114,7 @@ export default class Levels {
     this.settingsButton.addEventListener("click", this.openSettings);
     this.homeButton.addEventListener("click", this.goToStartScreen);
     this.levelsContainer.addEventListener("click", this.runLevel);
+    this.levelsContainer.addEventListener("click", this.showScore)
   }
 
   levelsTemplate(levelsNumber) {
@@ -116,8 +133,8 @@ export default class Levels {
         <nav class="footer-nav">
           <ul class="nav-list">
             <li class="nav-list--item home"><span>На главную</span></li>
-            <li class="nav-list--item categories"><span>Уровни</span></li>
-            <li class="nav-list--item score"><span>Результаты</span></li>
+            <li class="nav-list--item levels active"><span>Уровни</span></li>
+            <li class="nav-list--item results"><span>Результаты</span></li>
           </ul>
         </nav>
       </footer>

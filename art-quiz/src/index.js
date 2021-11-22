@@ -1,5 +1,6 @@
 import Levels from "./js/levelsScreen";
 import Quiz from "./js/quiz";
+import Results from "./js/resultsScreen";
 import SettingsScreen from "./js/settingsScreen";
 import StartScreen from "./js/startScreen";
 import "./sass/style.scss";
@@ -39,10 +40,10 @@ document.addEventListener("select-quiz", async (event) => {
   );
 });
 
-document.addEventListener("to-start", () => {
+document.addEventListener("to-start", (event) => {
   startScreen.render();
-  levels.destroy();
-  levels.elem.addEventListener("animationend", () =>
+  event.detail.destroy();
+  event.detail.elem.addEventListener("animationend", () =>
     container.append(startScreen.elem)
   );
 });
@@ -54,3 +55,9 @@ document.addEventListener("run-quiz", (event) => {
     container.append(quiz.elem)
   );
 });
+
+document.addEventListener("show-results", (event) => {
+  const results = new Results(event.detail);
+  levels.destroy();
+  levels.elem.addEventListener("animationend", () => container.append(results.elem))
+})

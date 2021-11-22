@@ -4,7 +4,6 @@
   flex-direction: column;
   align-items: center;
   width: 100vh;
-  overflow-y: scroll;
   height: 100%;
   padding: 10px;
   color: white;
@@ -92,14 +91,16 @@
           background-position: top center;
           background-repeat: no-repeat;
           background-size: 22px 22px;
+          &.active {
+            filter: invert(7%) sepia(20%) saturate(6077%) hue-rotate(303deg) brightness(118%) contrast(113%);
+          }
           &.home {
             background-image: url("../assets/svg/home.svg");
           }
-          &.categories {
+          &.levels {
             background-image: url("../assets/svg/categories.svg");
-            color: #ffbca2;
           }
-          &.score {
+          &.results {
             background-image: url("../assets/svg/score.svg");
           }
         }

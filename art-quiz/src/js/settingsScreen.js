@@ -58,6 +58,7 @@ export default class SettingsScreen {
     this.volumeBar.value = this.settings.volume;
     this.timeToggle.checked = this.settings.time;
     this.timePerAnswer.value = this.settings.timePerAnswer;
+    this.updateVolume();
   };
 
   saveSettings = () => {
@@ -87,7 +88,7 @@ export default class SettingsScreen {
     this.volumeBar.style.background = `linear-gradient(to right, #FFBCA2 0%, #FFBCA2 ${
       this.volumeBar.value * 100
     }%, #A4A4A4 ${this.volumeBar.value * 100}%, #A4A4A4 100%)`;
-    if (this.volumeBar.value === 0) {
+    if (this.volumeBar.value === "0") {
       this.volumeButton.classList.remove("active");
     } else {
       this.volumeButton.classList.add("active");
@@ -154,7 +155,7 @@ export default class SettingsScreen {
       <h2>Громкость</h2>
       <div class="volume-control">
         <button type="button" class="button volume-button active"></button>
-        <input type="range" min="0" max="1" value="0.5" step="0.01" name="volume" id="volume">
+        <input type="range" min="0" max="1" step="0.01" name="volume" id="volume">
       </div>
     </div>
     <div class="setting-item time-game">
