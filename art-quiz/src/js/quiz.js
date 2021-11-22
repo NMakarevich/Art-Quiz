@@ -19,7 +19,7 @@ export default class Quiz {
     this.createAnsewrsList();
     this.getSettings();
     this.createModalsTemplates();
-    this.container = createElement("question-screen", this.questionTemplate());
+    this.container = createElement("screen question-screen", this.questionTemplate());
     this.eventListeners();
     this.audio = new Audio();
     this.audio.volume = this.settings.volume;
@@ -28,7 +28,7 @@ export default class Quiz {
       false: "./assets/sounds/false.wav",
       finish: "./assets/sounds/finish.wav",
     };
-    this.elem.addEventListener("animationend", () => this.timer());
+    this.roundTimer();
   }
 
   destroy() {
@@ -75,12 +75,22 @@ export default class Quiz {
     this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
   }
 
-  timer = () => {
-    if (this.settings.time === "false") return;
+  roundTimer() {
+    if (!this.settings.time) return;
     const duration = Number(this.settings.timePerAnswer);
-    let time = duration;
+    let time = duration + 1;
+        
+    this.timer = setInterval(() => {
+      if (this.userAnswers.length === this.questionNum + 1) {
+        clearInterval(this.timer);
+        return;
+      }
 
-    const timer = setInterval(() => {
+      if (this.container.classList.contains("hide")) {
+        clearInterval(this.timer);
+        return
+      }
+
       time -= 1;
       const progress = (100 * (duration - time)) / duration;
 
@@ -88,17 +98,12 @@ export default class Quiz {
       this.timerProgress.style.background = `linear-gradient(to right, #ffbca2 0%, #ffbca2 ${progress}%, white ${progress}%, white 100%)`;
 
       if (time === 0) {
-        this.userAnswers.push(false);
+        clearInterval(this.timer);
+        this.userAnswers[this.questionNum] = false;
         this.audio.src = this.audioSources[this.userAnswers[this.questionNum]];
         this.showModalAnswer();
         this.audio.play();
-        clearInterval(timer);
       }
-
-      if (this.userAnswers.length === this.questionNum + 1)
-        clearInterval(timer);
-
-      if (this.elem.classList.contains("hide")) clearInterval(timer);
     }, 1000);
   };
 
@@ -111,11 +116,11 @@ export default class Quiz {
         this.questionNum += 1;
         this.container.innerHTML = this.questionTemplate();
         this.container.classList.remove("hide");
-        this.timer();
         this.eventListeners();
       },
       { once: true }
     );
+    this.roundTimer();
   };
 
   selectAnswer = (event) => {
