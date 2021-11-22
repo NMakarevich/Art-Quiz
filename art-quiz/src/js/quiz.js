@@ -21,6 +21,14 @@ export default class Quiz {
     this.createModalsTemplates();
     this.container = createElement("question-screen", this.questionTemplate());
     this.eventListeners();
+    this.audio = new Audio();
+    this.audio.volume = this.settings.volume;
+    this.audioSources = {
+      true: './assets/sounds/true.wav',
+      false: './assets/sounds/false.wav',
+      finish: './assets/sounds/finish.wav',
+    }
+    this.elem.addEventListener("animationend", () => this.timer())
   }
 
   destroy() {
@@ -30,6 +38,14 @@ export default class Quiz {
 
   get elem() {
     return this.container;
+  }
+
+  get timerProgress() {
+    return this.container.querySelector('.progress')
+  }
+
+  get timeIndicator() {
+    return this.container.querySelector('.time')
   }
 
   get closeButton() {
@@ -59,24 +75,56 @@ export default class Quiz {
     this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
   };
 
+  timer = () => {
+    if (this.settings.time === "false") return;
+    const duration = Number(this.settings.timePerAnswer);
+    let time = duration;
+    
+    const timer = setInterval(() => {
+      time -= 1;
+      const progress = 100 * (duration - time) / duration
+
+      this.timeIndicator.textContent = `0:${time >= 10 ? time : `0${time}`}`;
+      this.timerProgress.style.background = `linear-gradient(to right, #ffbca2 0%, #ffbca2 ${progress}%, white ${progress}%, white 100%)`
+
+      if (time === 0) {
+        this.userAnswers.push(false);
+        this.audio.src = this.audioSources[this.userAnswers[this.questionNum]]
+        this.showModalAnswer();
+        this.audio.play();
+        clearInterval(timer);
+      }
+
+      if (this.userAnswers.length === this.questionNum + 1) clearInterval(timer);
+
+      if (this.elem.classList.contains('hide')) clearInterval(timer)
+    }, 1000)
+  }
+
   nextQuestion = () => {
     this.container.classList.add("hide");
-    this.destroyModal();
-    this.questionNum += 1;
-    this.container.innerHTML = this.questionTemplate();
-    this.container.classList.remove("hide")
-    this.eventListeners();
+    this.container.addEventListener("animationend", () => {
+      this.destroyModal();
+      this.questionNum += 1;
+      this.container.innerHTML = this.questionTemplate();
+      this.container.classList.remove("hide");
+      this.timer();
+      this.eventListeners();
+    }, {once: true})
   };
 
   selectAnswer = (event) => {
     const {target} = event;
     if (!target.classList.contains('answer') || this.container.querySelector('.modal')) return;
-    
+
     const {answer} = target.dataset;
     if (this.quiz === 'Artist') this.userAnswers.push(answer === this.levelList[this.questionNum].author);
     else this.userAnswers.push(answer === this.levelList[this.questionNum].imageNum);
 
+    this.audio.src = this.audioSources[this.userAnswers[this.questionNum]]
+    
     this.showModalAnswer();
+    this.audio.play();
   }
 
   showModalClose = () => {
@@ -93,7 +141,11 @@ export default class Quiz {
   showModalResult = () => {
     this.destroyModal();
     this.createModalsTemplates();
-    setTimeout(() => this.renderModal(this.modalsTemplates.modalResults), 500)
+    setTimeout(() => {
+      this.renderModal(this.modalsTemplates.modalResults);
+      this.audio.src = this.audioSources.finish;
+      this.audio.play();
+    }, 500);
     this.writeResultsToLS();
   }
 
@@ -104,14 +156,13 @@ export default class Quiz {
   }
 
   toLevels = () => {
-    this.destroyModal();
-      const evt = new CustomEvent('select-quiz', {
-        detail: {
-          quiz: this.quiz,
-          source: this
-        },
-        bubbles: true
-      })
+    const evt = new CustomEvent('select-quiz', {
+      detail: {
+        quiz: this.quiz,
+        source: this
+      },
+      bubbles: true
+    })
     this.elem.dispatchEvent(evt)
   }
 
@@ -123,20 +174,6 @@ export default class Quiz {
       
     if (target.classList.contains('button-next')) this.nextQuestion();
     if (target.classList.contains('button-results')) this.showModalResult();
-    if (target.classList.contains('button-next-quiz')) this.nextQuiz();
-  }
-
-  nextQuiz = () => {
-    const event = new CustomEvent('run-quiz', {
-      detail: {
-        level: this.level + 1,
-        quiz: this.quiz,
-        data: this.data,
-        source: this
-      },
-      bubbles: true
-    })
-    this.elem.dispatchEvent(event)
   }
 
   eventListeners() {
@@ -212,10 +249,7 @@ export default class Quiz {
         name: "modal modal-results",
         template: `
           <div class="results">${this.userAnswers.filter(item => item).length}/10</div>
-          <div class="modal-buttons">
-            <button type="button" class="button button-exit">К уровням</button>
-            <button type="button" class="button button-next-quiz" ${this.level === 11 ? "disabled" : ""}>Следующий уровень</button>
-          </div>
+          <button type="button" class="button button-exit">К уровням</button>
         `
       }
     }
@@ -230,11 +264,12 @@ export default class Quiz {
         this.levelList[this.questionNum].author
       }</span>?`,
     };
+    const time = this.settings.timePerAnswer;
     const html = `<header class="question-header">
     <button type="button" class="button button-close"></button>
     <div class="timer ${this.settings.time ? "" : "hidden"}">
       <div class="progress"></div>
-      <div class="time">0:30</div>
+      <div class="time">0:${time >= 10 ? time : `0${time}`}</div>
     </div>
   </header>
   <main class="question-main">
