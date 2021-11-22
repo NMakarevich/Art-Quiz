@@ -7,13 +7,13 @@ export default class SettingsScreen {
   }
 
   render() {
+    this.getSettings();
     this.container = createElement(
       "settings-screen",
       this.settingsScreenTemplate()
     );
     this.eventListeners();
-    this.getSettings();
-    this.setSettings();
+    this.timeToggle.checked = this.settings.time;
     this.updateVolume();
   }
 
@@ -155,18 +155,20 @@ export default class SettingsScreen {
       <h2>Громкость</h2>
       <div class="volume-control">
         <button type="button" class="button volume-button active"></button>
-        <input type="range" min="0" max="1" step="0.01" name="volume" id="volume">
+        <input type="range" min="0" max="1" step="0.01" value="${this.settings.volume}" name="volume" id="volume">
       </div>
     </div>
     <div class="setting-item time-game">
       <h2>Игра на время</h2>
-      <label for="time-game">Вкл/Выкл<input type="checkbox" name="time-game" id="time-game"><span class="toggle"></span></label>
+      <label for="time-game">Вкл/Выкл<input type="checkbox" name="time-game" id="time-game">
+        <span class="toggle"></span>
+      </label>
     </div>
     <div class="setting-item time-answer">
       <h2>Время на ответ</h2>
       <div class="time-control">
         <button type="button" class="button button-minus">−</button>
-        <input type="number" min="5" max="30" step="5" value="20" name="time-answer" id="time-answer" readonly>
+        <input type="number" min="5" max="30" step="5" value="${this.settings.timePerAnswer}" name="time-answer" id="time-answer" readonly>
         <button type="button" class="button button-plus">+</button>
       </div>
     </div>
