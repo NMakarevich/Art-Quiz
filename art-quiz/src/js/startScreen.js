@@ -36,7 +36,7 @@ export default class StartScreen {
     const evt = new CustomEvent("select-quiz", {
       detail: {
         quiz: target.dataset.quiz,
-        source: this
+        source: this,
       },
       bubbles: true,
     });
@@ -90,6 +90,6 @@ export default class StartScreen {
         <a href="https://github.com/NMakarevich" target="_blank">My GitHub</a>
         <span>2021</span>
       </footer>
-    `
+    `;
   }
 }

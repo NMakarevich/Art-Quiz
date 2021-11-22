@@ -1,7 +1,7 @@
 @keyframes show-modal {
   from {
     transform: translate(-200%, -50%);
-  };
+  }
   to {
     transform: translate(-50%, -50%);
   }
@@ -9,7 +9,7 @@
 @keyframes hide-modal {
   from {
     transform: translate(-50%, -50%);
-  };
+  }
   to {
     transform: translate(-200%, -50%);
   }
@@ -137,11 +137,11 @@
     color: black;
     border-radius: 24px;
     animation-name: show-modal;
-    animation-duration: .4s;
+    animation-duration: 0.4s;
     animation-fill-mode: forwards;
     &.hide {
       animation-name: hide-modal;
-      animation-duration: .4s;
+      animation-duration: 0.4s;
       animation-fill-mode: forwards;
     }
 
@@ -190,10 +190,10 @@
           background-size: cover;
           background-repeat: no-repeat;
           &.true {
-            background-image: url('../assets/svg/true.svg');
+            background-image: url("../assets/svg/true.svg");
           }
           &.false {
-            background-image: url('../assets/svg/false.svg');
+            background-image: url("../assets/svg/false.svg");
           }
         }
         img {

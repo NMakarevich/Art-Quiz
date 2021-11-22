@@ -59,5 +59,7 @@ document.addEventListener("run-quiz", (event) => {
 document.addEventListener("show-results", (event) => {
   const results = new Results(event.detail);
   levels.destroy();
-  levels.elem.addEventListener("animationend", () => container.append(results.elem))
-})
+  levels.elem.addEventListener("animationend", () =>
+    container.append(results.elem)
+  );
+});

@@ -92,7 +92,8 @@
           background-repeat: no-repeat;
           background-size: 22px 22px;
           &.active {
-            filter: invert(7%) sepia(20%) saturate(6077%) hue-rotate(303deg) brightness(118%) contrast(113%);
+            filter: invert(7%) sepia(20%) saturate(6077%) hue-rotate(303deg)
+              brightness(118%) contrast(113%);
           }
           &.home {
             background-image: url("../assets/svg/home.svg");

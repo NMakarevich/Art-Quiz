@@ -1,4 +1,4 @@
-import createElement from './createElement'
+import createElement from "./createElement";
 
 export default class Results {
   constructor({ level, quiz, data }) {
@@ -14,18 +14,20 @@ export default class Results {
   render() {
     this.createLevelList();
     this.getAnswersList();
-    this.container = createElement("result-screen", this.resultsTemplate())
+    this.container = createElement("result-screen", this.resultsTemplate());
     this.eventListeners();
   }
 
   destroy() {
-    this.container.classList.add('hide');
-    this.container.addEventListener('animationend', () => this.container.remove())
+    this.container.classList.add("hide");
+    this.container.addEventListener("animationend", () =>
+      this.container.remove()
+    );
   }
 
   destroyModal() {
-    this.modal.classList.add('hide');
-    this.modal.addEventListener('animationend', () => this.modal.remove())
+    this.modal.classList.add("hide");
+    this.modal.addEventListener("animationend", () => this.modal.remove());
   }
 
   get elem() {
@@ -33,15 +35,15 @@ export default class Results {
   }
 
   get answersContainer() {
-    return this.container.querySelector('.answers-container')
+    return this.container.querySelector(".answers-container");
   }
 
   get navList() {
-    return this.container.querySelector('.nav-list')
+    return this.container.querySelector(".nav-list");
   }
 
   showImageInfo = (event) => {
-    const {target} = event;
+    const { target } = event;
     if (target.tagName !== "IMG") return;
 
     const targetNum = Number(target.alt);
@@ -49,13 +51,13 @@ export default class Results {
     this.container.append(this.modal);
     this.modal.addEventListener("click", (evt) => {
       const targetBtn = evt.target;
-      if(targetBtn.tagName !== "BUTTON") return;
+      if (targetBtn.tagName !== "BUTTON") return;
       this.destroyModal();
-    })
-  }
+    });
+  };
 
   navigate = (event) => {
-    const {target} = event;
+    const { target } = event;
 
     if (!target.classList.contains("nav-list--item")) return;
 
@@ -68,16 +70,16 @@ export default class Results {
     }
 
     if (target.classList.contains("levels")) {
-      const evt = new CustomEvent('select-quiz', {
+      const evt = new CustomEvent("select-quiz", {
         detail: {
           quiz: this.quiz,
-          source: this
+          source: this,
         },
-        bubbles: true
-      })
-      this.elem.dispatchEvent(evt)
+        bubbles: true,
+      });
+      this.elem.dispatchEvent(evt);
     }
-  }
+  };
 
   createLevelList() {
     this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
@@ -90,7 +92,7 @@ export default class Results {
 
   eventListeners() {
     this.answersContainer.addEventListener("click", this.showImageInfo);
-    this.navList.addEventListener("click", this.navigate)
+    this.navList.addEventListener("click", this.navigate);
   }
 
   resultsTemplate() {
@@ -99,11 +101,16 @@ export default class Results {
         <div class="logo"></div>
     </header>
     <main>
-      <h2>${this.quiz === "Artist" ? "Художники" : "Картины"}. Уровень ${this.level + 1}</h2>
+      <h2>${this.quiz === "Artist" ? "Художники" : "Картины"}. Уровень ${
+      this.level + 1
+    }</h2>
       <div class="answers-container">
-        ${this.levelList.map((item, index) => 
-          `<img class="${this.answers[index]}" src="./assets/img/arts/squared/${item.imageNum}.jpg" alt="${index}">`
-        ).join("")}
+        ${this.levelList
+          .map(
+            (item, index) =>
+              `<img class="${this.answers[index]}" src="./assets/img/arts/squared/${item.imageNum}.jpg" alt="${index}">`
+          )
+          .join("")}
       </div>
     </main>
     <footer class="levels-footer">
@@ -115,7 +122,7 @@ export default class Results {
         </ul>
       </nav>
     </footer>
-    `
+    `;
   }
 
   modalTemplate(index) {
@@ -129,6 +136,6 @@ export default class Results {
       <p class="image-year">${this.levelList[index].year}</p> 
     </div>
     <button type="button" class="button button-close">Закрыть</button>
-    `
+    `;
   }
 }

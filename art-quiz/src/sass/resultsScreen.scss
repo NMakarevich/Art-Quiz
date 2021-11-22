@@ -77,7 +77,8 @@
           background-repeat: no-repeat;
           background-size: 22px 22px;
           &.active {
-            filter: invert(7%) sepia(20%) saturate(6077%) hue-rotate(303deg) brightness(118%) contrast(113%);
+            filter: invert(7%) sepia(20%) saturate(6077%) hue-rotate(303deg)
+              brightness(118%) contrast(113%);
           }
           &.home {
             background-image: url("../assets/svg/home.svg");
@@ -109,11 +110,11 @@
     color: black;
     border-radius: 24px;
     animation-name: show-modal;
-    animation-duration: .4s;
+    animation-duration: 0.4s;
     animation-fill-mode: forwards;
     &.hide {
       animation-name: hide-modal;
-      animation-duration: .4s;
+      animation-duration: 0.4s;
       animation-fill-mode: forwards;
     }
 
