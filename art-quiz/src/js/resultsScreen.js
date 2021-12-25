@@ -42,8 +42,8 @@ export default class Results {
     return this.container.querySelector(".answers-container");
   }
 
-  get navList() {
-    return this.container.querySelector(".nav-list");
+  get navLists() {
+    return this.container.querySelectorAll(".nav-list");
   }
 
   showImageInfo = (event) => {
@@ -96,7 +96,9 @@ export default class Results {
 
   eventListeners() {
     this.answersContainer.addEventListener("click", this.showImageInfo);
-    this.navList.addEventListener("click", this.navigate);
+    this.navLists.forEach((navList) =>
+      navList.addEventListener("click", this.navigate)
+    );
   }
 
   resultsTemplate() {

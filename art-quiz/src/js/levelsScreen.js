@@ -57,8 +57,8 @@ export default class Levels {
     return this.container.querySelector(".button-settings");
   }
 
-  get homeButton() {
-    return this.container.querySelector(".home");
+  get homeButtons() {
+    return this.container.querySelectorAll(".home");
   }
 
   get levelsContainer() {
@@ -116,8 +116,10 @@ export default class Levels {
   };
 
   eventListeners() {
+    this.homeButtons.forEach((button) =>
+      button.addEventListener("click", this.goToStartScreen)
+    );
     this.settingsButton.addEventListener("click", this.openSettings);
-    this.homeButton.addEventListener("click", this.goToStartScreen);
     this.levelsContainer.addEventListener("click", this.runLevel, {
       once: true,
     });
