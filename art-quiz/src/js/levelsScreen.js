@@ -1,3 +1,4 @@
+import { questionNum } from "./consts";
 import createElement from "./createElement";
 
 export default class Levels {
@@ -45,7 +46,7 @@ export default class Levels {
     const res = await fetch("./json/images.json");
     const data = await res.json();
     const dataLength = Math.floor(data.length / 2);
-    this.levelsNumber = Math.floor(dataLength / 10);
+    this.levelsNumber = Math.floor(dataLength / questionNum);
     this.data =
       this.quiz === "Artist"
         ? data.slice(0, dataLength)
@@ -154,7 +155,7 @@ export default class Levels {
 
   cardTemplate(levelsNumber) {
     let html = "";
-    const startNum = this.quiz === "Artist" ? 0 : 120;
+    const startNum = this.quiz === "Artist" ? 0 : this.data.length / 2;
     for (let i = 0; i < levelsNumber; i += 1) {
       html += `<div class="level-card ${
         this.playedLevels[i] == null ? "not-played" : ""
@@ -168,7 +169,7 @@ export default class Levels {
         }/10</span>
       </header>
       <img class="card-image" src="./assets/img/arts/squared/${
-        i * 10 + startNum
+        i * questionNum + startNum
       }.jpg">
     </div>`;
     }

@@ -1,3 +1,4 @@
+import { answersNum, questionNum } from "./consts";
 import createElement from "./createElement";
 
 export default class Quiz {
@@ -79,7 +80,7 @@ export default class Quiz {
   };
 
   createLevelList() {
-    this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
+    this.levelList = this.data.slice(this.level * questionNum, this.level * questionNum + questionNum);
   }
 
   updateProgress() {
@@ -219,11 +220,11 @@ export default class Quiz {
   }
 
   createAnsewrsList() {
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < questionNum; i += 1) {
       const answers = [];
       if (this.quiz === "Artist") {
         answers.push(this.levelList[i].author);
-        while (answers.length < 4) {
+        while (answers.length < answersNum) {
           const randNum = Math.round(Math.random() * (this.data.length - 1));
           if (!answers.includes(this.data[randNum].author))
             answers.push(this.data[randNum].author);
@@ -232,7 +233,7 @@ export default class Quiz {
         const tmpArr = [];
         tmpArr.push(this.levelList[i].author);
         answers.push(this.levelList[i].imageNum);
-        while (answers.length < 4) {
+        while (answers.length < answersNum) {
           const randNum = Math.round(Math.random() * (this.data.length - 1));
           if (!tmpArr.includes(this.data[randNum].author)) {
             tmpArr.push(this.data[randNum].author);
@@ -282,9 +283,9 @@ export default class Quiz {
             <p class="image-year">${this.levelList[this.questionNum].year}</p> 
           </div>
           <button type="button" class="button ${
-            this.questionNum !== 9 ? "button-next" : "button-results"
+            this.questionNum !== questionNum - 1 ? "button-next" : "button-results"
           }">
-            ${this.questionNum !== 9 ? "Далее" : "Результат"}
+            ${this.questionNum !== questionNum - 1 ? "Далее" : "Результат"}
           </button>
         `,
       },

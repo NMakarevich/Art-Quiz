@@ -1,3 +1,4 @@
+import { questionNum } from "./consts";
 import createElement from "./createElement";
 
 export default class Results {
@@ -85,7 +86,7 @@ export default class Results {
   };
 
   createLevelList() {
-    this.levelList = this.data.slice(this.level * 10, this.level * 10 + 10);
+    this.levelList = this.data.slice(this.level * questionNum, this.level * questionNum + questionNum);
   }
 
   getAnswersList() {
