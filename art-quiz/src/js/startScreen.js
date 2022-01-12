@@ -20,10 +20,23 @@ export default class StartScreen {
   }
 
   render() {
-    this.container = createElement(
-      "screen start-screen",
-      this.startScreenTemplate()
-    );
+    const html = `<header class="header-start">
+    <button type="button" class="button button-settings"></button>
+  </header>
+  <main class="main main-start">
+    <div class="logo"></div>
+    <div class="select-quiz">
+      <button type="button" class="button button-quiz" data-quiz="Artist">Художники</button>
+      <button type="button" class="button button-quiz" data-quiz="Pictures">Картины</button>
+    </div>
+  </main>
+  <footer class="footer footer-start">
+    <a href="http://rs.school/js" class="school-logo" target="_blank"></a>
+    <a href="https://github.com/NMakarevich" target="_blank">My GitHub</a>
+    <span>2021</span>
+  </footer>`;
+
+    this.container = createElement("screen start-screen", html);
     this.getSettings();
     this.eventListeners();
   }
@@ -74,25 +87,5 @@ export default class StartScreen {
     this.settingsButton.addEventListener("click", this.openSettings);
 
     this.quizButtons.addEventListener("click", this.selectQuiz);
-  }
-
-  startScreenTemplate() {
-    return `
-    <header class="header-start">
-        <button type="button" class="button button-settings"></button>
-      </header>
-      <main class="main main-start">
-        <div class="logo"></div>
-        <div class="select-quiz">
-          <button type="button" class="button button-quiz" data-quiz="Artist">Художники</button>
-          <button type="button" class="button button-quiz" data-quiz="Pictures">Картины</button>
-        </div>
-      </main>
-      <footer class="footer footer-start">
-        <a href="http://rs.school/js" class="school-logo" target="_blank"></a>
-        <a href="https://github.com/NMakarevich" target="_blank">My GitHub</a>
-        <span>2021</span>
-      </footer>
-    `;
   }
 }
